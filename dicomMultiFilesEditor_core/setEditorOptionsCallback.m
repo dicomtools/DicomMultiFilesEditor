@@ -11,56 +11,56 @@ function setEditorOptionsCallback(~, ~)
 %Last specifications modified:
 %
 % Copyright 2020, Daniel Lafontaine, on behalf of the dicomMultiFilesEditor development team.
-% 
+%
 % This file is part of The DICOM Multi-Files Editor (dicomMultiFilesEditor).
-% 
+%
 % dicomMultiFilesEditor development has been led by: Daniel Lafontaine
-% 
-% dicomMultiFilesEditor is distributed under the terms of the Lesser GNU Public License. 
-% 
+%
+% dicomMultiFilesEditor is distributed under the terms of the Lesser GNU Public License.
+%
 %     This version of dicomMultiFilesEditor is free software: you can redistribute it and/or modify
 %     it under the terms of the GNU General Public License as published by
 %     the Free Software Foundation, either version 3 of the License, or
 %     (at your option) any later version.
-% 
+%
 % dicomMultiFilesEditor is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 % without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 % See the GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with dicomMultiFilesEditor.  If not, see <http://www.gnu.org/licenses/>.
 
     if editorMultiFiles('get') == true
-        chkSaveHeaderEnable = 'on';  
-    else 
+        chkSaveHeaderEnable = 'on';
+    else
         chkSaveHeaderEnable = 'off';
-    end 
+    end
 
     if editorSaveAllHeader('get') == true
         sAllHeader = 'off';
     else
         sAllHeader = 'on';
-    end  
+    end
 
     if editorDefaultPath('get') == true
         sDirEnable = 'off';
-    else 
+    else
         sDirEnable = 'on';
-    end               
+    end
 
     if editorDefaultDict('get') == true
         sDicEnable = 'off';
-    else 
+    else
         sDicEnable = 'on';
-    end 
+    end
 
     dScreenSize  = get(groot, 'Screensize');
     dDlgPosition = get(dlgEditorWindowsPtr('get'),'position');
 
-    xSize     = dScreenSize(3) * dDlgPosition(3); 
+    xSize     = dScreenSize(3) * dDlgPosition(3);
     xPosition = dScreenSize(3) * dDlgPosition(1) + ((xSize /2)-250);
 
-    ySize     = dScreenSize(4) * dDlgPosition(4); 
+    ySize     = dScreenSize(4) * dDlgPosition(4);
     yPosition = dScreenSize(4) * dDlgPosition(2) + ((ySize /2)-200);
 
     dlgOptions = ...
@@ -78,7 +78,7 @@ function setEditorOptionsCallback(~, ~)
                   'enable'  , 'on',...
                   'value'   , editorAutoSeriesUID('get'),...
                   'position', [20 200 20 20]...
-                  );                      
+                  );
 
     txtAutoUID = ...
         uicontrol(dlgOptions,...
@@ -100,7 +100,7 @@ function setEditorOptionsCallback(~, ~)
                   'value'   , editorMultiFiles('get'),...
                   'position', [20 170 20 20],...
                   'Callback', @checkBoxMultiFilesCallback...
-                  );                      
+                  );
 
     txtMultiFile = ...
         uicontrol(dlgOptions,...
@@ -114,7 +114,7 @@ function setEditorOptionsCallback(~, ~)
     txtMultiFile.ButtonDownFcn = @multiFilesTxtCallback;
 
 
-    % Save Header 
+    % Save Header
 
     chkSaveHeader = ...
         uicontrol(dlgOptions,...
@@ -143,7 +143,7 @@ function setEditorOptionsCallback(~, ~)
                    'Background', 'white',...
                    'string'    , editorSaveHeaderNumber('get'),...
                    'position'  , [200 147 200 20]...
-                   );              
+                   );
 
     % Destination path
 
@@ -173,7 +173,7 @@ function setEditorOptionsCallback(~, ~)
                   'string'  , 'Destination Path:',...
                   'horizontalalignment', 'left',...
                   'position', [20 97 100 20]...
-                  );                     
+                  );
 
     edtDirPath = ...
         uicontrol(dlgOptions,...
@@ -190,7 +190,7 @@ function setEditorOptionsCallback(~, ~)
                   'String'  , '...',...
                   'Position', [405 100 20 20],...
                   'Callback', @setDirPathCallback...
-                  ); 
+                  );
 
     % DICOM Dictionary
 
@@ -236,7 +236,7 @@ function setEditorOptionsCallback(~, ~)
                   'String'  ,'...',...
                   'Position',[405 55 20 20],...
                   'Callback', @setDictPathCallback...
-                  );                
+                  );
 
     % Cancel or Proceed
 
@@ -244,13 +244,13 @@ function setEditorOptionsCallback(~, ~)
                   'String','Cancel',...
                   'Position',[370 7 75 25],...
                   'Callback', @cancelOptionsCallback...
-                  );  
+                  );
 
         uicontrol(dlgOptions,...
                   'String','Ok',...
                   'Position',[290 7 75 25],...
                   'Callback', @okOptionsCallback...
-                  );              
+                  );
 
 %        if editorIntegrateToBrowser('get') == true
 %            sLogo = './dicomMultiFilesEditor/logo.png';
@@ -259,26 +259,26 @@ function setEditorOptionsCallback(~, ~)
 %        end
 
 %        javaFrame = get(dlgOptions,'JavaFrame');
-%        javaFrame.setFigureIcon(javax.swing.ImageIcon(sLogo));       
+%        javaFrame.setFigureIcon(javax.swing.ImageIcon(sLogo));
 
-    function checkBoxSaveHeaderCallback(hObject, ~)   
+    function checkBoxSaveHeaderCallback(hObject, ~)
 
-        if (get(hObject, 'value')) 
+        if (get(hObject, 'value'))
 
-            set(edtSaveHeader, 'enable', 'off'); 
+            set(edtSaveHeader, 'enable', 'off');
             sAllHeader = 'off';
         else
 
-            set(edtSaveHeader, 'enable', 'on'); 
+            set(edtSaveHeader, 'enable', 'on');
             sAllHeader = 'on';
-        end  
-    end  
+        end
+    end
 
-    function saveHeaderTxtCallback(~, ~)  
+    function saveHeaderTxtCallback(~, ~)
 
-        if (get(chkMultiFile, 'value'))      
+        if (get(chkMultiFile, 'value'))
 
-            if (get(chkSaveHeader, 'value'))   
+            if (get(chkSaveHeader, 'value'))
                 set(chkSaveHeader, 'value', 0);
             else
                 set(chkSaveHeader, 'value', 1);
@@ -292,27 +292,27 @@ function setEditorOptionsCallback(~, ~)
 
         if (get(hObject,'value'))
 
-            if(strcmpi(get(chkSaveHeader, 'enable'), 'off'))                       
-                set(chkSaveHeader, 'enable', 'on'); 
-            end                   
+            if(strcmpi(get(chkSaveHeader, 'enable'), 'off'))
+                set(chkSaveHeader, 'enable', 'on');
+            end
 
-            if(strcmpi(get(edtSaveHeader, 'enable'), 'off'))                       
-                if (get(chkSaveHeader, 'value'))                                                           
-                    set(edtSaveHeader, 'enable', 'off'); 
-                else    
-                    set(edtSaveHeader, 'enable', 'on'); 
-                end                                         
-            end                                                                    
-        else                                                
+            if(strcmpi(get(edtSaveHeader, 'enable'), 'off'))
+                if (get(chkSaveHeader, 'value'))
+                    set(edtSaveHeader, 'enable', 'off');
+                else
+                    set(edtSaveHeader, 'enable', 'on');
+                end
+            end
+        else
 
-            if(strcmpi(get(chkSaveHeader, 'enable'), 'on'))                       
+            if(strcmpi(get(chkSaveHeader, 'enable'), 'on'))
                 set(chkSaveHeader, 'enable', 'off');
             end
 
-            if(strcmpi(get(edtSaveHeader, 'enable'), 'on'))                       
-                set(edtSaveHeader, 'enable', 'off'); 
-            end                    
-        end    
+            if(strcmpi(get(edtSaveHeader, 'enable'), 'on'))
+                set(edtSaveHeader, 'enable', 'off');
+            end
+        end
     end
 
     function autoUIDTxtCallback(~, ~)
@@ -331,45 +331,45 @@ function setEditorOptionsCallback(~, ~)
             set(chkMultiFile, 'value', true);
         end
 
-        checkBoxMultiFilesCallback(chkMultiFile);        
-    end         
+        checkBoxMultiFilesCallback(chkMultiFile);
+    end
 
     function checkBoxDefaultPathCallback(hObject, ~)
 
-        if ~(get(hObject,'value'))                
-            if(strcmpi(get(edtDirPath, 'enable'), 'off'))                       
+        if ~(get(hObject,'value'))
+            if(strcmpi(get(edtDirPath, 'enable'), 'off'))
                 set(edtDirPath   , 'enable', 'on');
-            end    
+            end
 
-            if(strcmpi(get(btnSetDirPath, 'enable'), 'off'))                       
+            if(strcmpi(get(btnSetDirPath, 'enable'), 'off'))
                 set(btnSetDirPath, 'enable', 'on');
-            end    
-        else        
-            if(strcmpi(get(edtDirPath, 'enable'), 'on'))                       
+            end
+        else
+            if(strcmpi(get(edtDirPath, 'enable'), 'on'))
                 set(edtDirPath   , 'enable', 'off');
             end
 
-            if(strcmpi(get(btnSetDirPath, 'enable'), 'on'))                       
+            if(strcmpi(get(btnSetDirPath, 'enable'), 'on'))
                 set(btnSetDirPath, 'enable', 'off');
-            end    
+            end
         end
-    end           
+    end
 
     function defaultPathTxtCallback(~, ~)
 
-        if (get(chkDefTarget,'value')) 
+        if (get(chkDefTarget,'value'))
             set (chkDefTarget, 'value', false);
-        else       
-            set (chkDefTarget, 'value', true);    
+        else
+            set (chkDefTarget, 'value', true);
         end
 
         checkBoxDefaultPathCallback(chkDefTarget);
-    end    
+    end
 
     function setDirPathCallback(~, ~)
 
-         sCurrentDir = pwd;            
-         if editorIntegrateToBrowser('get') == true   
+         sCurrentDir = pwd;
+         if editorIntegrateToBrowser('get') == true
              sCurrentDir = [sCurrentDir '/dicomMultiFilesEditor'];
          end
 
@@ -378,41 +378,41 @@ function setEditorOptionsCallback(~, ~)
          if exist(sMatFile, 'file') % lastDirMat mat file exists, load it
 
             load('-mat', sMatFile);
-            if exist('lastDestDir', 'var') 
+            if exist('lastDestDir', 'var')
                 sCurrentDir = lastDestDir;
-            end       
+            end
 
-            if sCurrentDir == 0                    
-              sCurrentDir = pwd;            
-           end                
+            if sCurrentDir == 0
+              sCurrentDir = pwd;
+           end
         end
 
         sOutDir = uigetdir(sCurrentDir);
         if sOutDir == 0
             return;
-        else    
-            sOutDir = [sOutDir '/'];                
-            set(edtDirPath, 'string', sOutDir); 
+        else
+            sOutDir = [sOutDir '/'];
+            set(edtDirPath, 'string', sOutDir);
 
             try
                 lastDestDir = sOutDir;
                 save(sMatFile, 'lastDestDir');
             catch
-                editorProgressBar(1 , sprintf('Warning: Cant save file %s', sMatFile));             
-                h = msgbox(sprintf('Warning: Cant save file %s', sMatFile), 'Warning');    
+                editorProgressBar(1 , sprintf('Warning: Cant save file %s', sMatFile));
+%                h = msgbox(sprintf('Warning: Cant save file %s', sMatFile), 'Warning');    
 
-%                    if editorIntegrateToBrowser('get') == true                                        
+%                    if editorIntegrateToBrowser('get') == true
 %                        sLogo = './dicomMultiFilesEditor/logo.png';
 %                    else
 %                        sLogo = './logo.png';
-%                    end  
+%                    end
 
 %                    javaFrame = get(h, 'JavaFrame');
 %                    javaFrame.setFigureIcon(javax.swing.ImageIcon(sLogo));
-            end 
+            end
         end
 
-    end   
+    end
 
     function checkBoxPrivDictCallback(hObject, ~)
 
@@ -420,18 +420,18 @@ function setEditorOptionsCallback(~, ~)
 
             set(edtDictPath   ,'enable', 'on');
             set(btnSetDictPath,'enable', 'on');
-        else                  
+        else
             set(edtDictPath   ,'enable', 'off');
             set(btnSetDictPath,'enable', 'off');
         end
-    end  
+    end
 
     function privDictTxtCallback(~, ~)
 
         if (get(chkDefDict,'value'))
 
             set(chkDefDict   ,'value' , 0);
-        else           
+        else
             set(chkDefDict   ,'value' , 1);
         end
 
@@ -447,17 +447,17 @@ function setEditorOptionsCallback(~, ~)
         end
 
         [sDicomDict, sDictPathName] = ...
-            uigetfile([sOpenPath '*.txt'], 'DICOM Dictionary'); 
+            uigetfile([sOpenPath '*.txt'], 'DICOM Dictionary');
         sDicomDict = [sDictPathName sDicomDict];
 
         if sDictPathName ~= 0
-            set(edtDictPath, 'string', sDicomDict); 
+            set(edtDictPath, 'string', sDicomDict);
         end
      end
 
     function cancelOptionsCallback(~, ~)
 
-        delete(dlgOptions);                     
+        delete(dlgOptions);
     end
 
     function dErrorCode = okOptionsCallback(~, ~)
@@ -466,13 +466,13 @@ function setEditorOptionsCallback(~, ~)
 
         if (get(chkAutoUID,'value'))
             editorAutoSeriesUID('set', true);
-        else    
-            editorAutoSeriesUID('set', false);                    
+        else
+            editorAutoSeriesUID('set', false);
         end
 
         % Proceed with the Directory
 
-        if ~(get(chkDefTarget,'value')) 
+        if ~(get(chkDefTarget,'value'))
             editorDefaultPath('set', false);
             sTargetDir = get(edtDirPath,'string');
             if (~numel(sTargetDir))
@@ -480,15 +480,15 @@ function setEditorOptionsCallback(~, ~)
                 editorDisplayMessage('Error: okOptionsCallback(), please select a directory!');
                 editorProgressBar(1, 'Error: okOptionsCallback(), please select a directory!');
             else
-                if ~strcmpi(sTargetDir, '')    
+                if ~strcmpi(sTargetDir, '')
                     if ~(sTargetDir(end) == '\') || ...
-                       ~(sTargetDir(end) == '/')     
+                       ~(sTargetDir(end) == '/')
                         editorTargetDir('set', [sTargetDir '/']);
-                    end   
+                    end
                 end
-            end    
+            end
         else
-            editorDefaultPath('set', true);    
+            editorDefaultPath('set', true);
         end
 
         % Proceed with the DICOM Dict
@@ -509,48 +509,48 @@ function setEditorOptionsCallback(~, ~)
                 dErrorCode = true;
                 editorDisplayMessage('Error: okOptionsCallback(), please enter a dictionary!');
                 editorProgressBar(1, 'Error: okOptionsCallback(), please enter a dictionary!');
-            end                  
+            end
         else
              editorDefaultDict('set', true);
         end
 
         % Proceed with sub directory
 
-        if get(chkMultiFile, 'value')             
+        if get(chkMultiFile, 'value')
 
             if strcmpi(get(btnEditorSortFilesPtr('get')  ,'enable'), 'off')
                 set(btnEditorSortFilesPtr('get'), 'enable', 'on');
-            end                               
+            end
 
             editorMultiFiles('set', true);
 
             % Proceed with the save header
 
-            if ~(get(chkSaveHeader, 'value'))   
+            if ~(get(chkSaveHeader, 'value'))
                 editorSaveAllHeader('set', false);
-                sSaveHeaderNumber = get(edtSaveHeader, 'string');                  
+                sSaveHeaderNumber = get(edtSaveHeader, 'string');
                 if (numel(sSaveHeaderNumber))
                     editorSaveHeaderNumber('set', sSaveHeaderNumber);
                 else
                     dErrorCode = true;
                     editorDisplayMessage('Error: okOptionsCallback(), please enter the slice(s) to save!');
                     editorProgressBar(1, 'Error: okOptionsCallback(), please enter the slice(s) to save!');
-                end  
+                end
 
             else
                 editorSaveAllHeader('set', true);
-            end   
+            end
         else
 
             if strcmpi(get(btnEditorSortFilesPtr('get')  ,'enable'), 'on')
                 set(btnEditorSortFilesPtr('get'), 'enable', 'off');
-            end 
+            end
 
             editorMultiFiles   ('set', false);
             editorSaveAllHeader('set', false);
-        end                   
+        end
 
-        delete(dlgOptions);                     
+        delete(dlgOptions);
 
 
         stFilesWindow = ...
@@ -558,32 +558,32 @@ function setEditorOptionsCallback(~, ~)
 
         if numel(stFilesWindow)
 
-            dElementOffset = get(lbEditorFilesWindowPtr('get'), 'Value');                       
+            dElementOffset = get(lbEditorFilesWindowPtr('get'), 'Value');
 
             if numel(stFilesWindow) >= dElementOffset
 
                 sSelectedLine = ...
-                    stFilesWindow{dElementOffset};              
+                    stFilesWindow{dElementOffset};
 
                 sDCMimg = [editorMainDir('get') sSelectedLine];
 
                 try
                     if bDisplaySource == true
                         set(lbEditorFilesWindowPtr('get'), 'enable', 'off');
-                        set(lbEditorMainWindowPtr('get') , 'enable', 'off'); 
+                        set(lbEditorMainWindowPtr('get') , 'enable', 'off');
 
                         editorDisplaySource(sDCMimg);
 
                         set(lbEditorFilesWindowPtr('get'), 'enable', 'on');
-                        set(lbEditorMainWindowPtr('get') , 'enable', 'on'); 
+                        set(lbEditorMainWindowPtr('get') , 'enable', 'on');
                     end
-                catch    
+                catch
                     dErrorCode = true;
                     set(lbEditorFilesWindowPtr('get'), 'enable', 'on');
-                    set(lbEditorMainWindowPtr('get') , 'enable', 'on'); 
+                    set(lbEditorMainWindowPtr('get') , 'enable', 'on');
                     editorProgressBar(1, 'Error');
                 end
             end
-        end    
-    end                
+        end
+    end
 end
