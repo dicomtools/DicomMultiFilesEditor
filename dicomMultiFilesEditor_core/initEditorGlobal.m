@@ -46,8 +46,5 @@ function initEditorGlobal()
     btnEditorSaveHeaderPtr ('set', '');
     edtEditorFindValuePtr  ('set', '');
     btnEditorSearchTagPtr  ('set', '');
-             
-    btnEditorHelpPtr ('set', '');                  
-    btnEditorAboutPtr('set', '');
      
 end

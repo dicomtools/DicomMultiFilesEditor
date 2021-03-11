@@ -30,27 +30,33 @@ function editorSearchTagCallback(~, ~)
 % You should have received a copy of the GNU General Public License
 % along with dicomMultiFilesEditor.  If not, see <http://www.gnu.org/licenses/>.
 
-   persistent iLastIndex;
-   persistent sLastValue;
+    persistent iLastIndex;
+    persistent sLastValue;
 
-   sValue = get(edtEditorFindValuePtr('get'), 'String');
+    sValue = get(edtEditorFindValuePtr('get'), 'String');
 
-   if ~strcmpi(sLastValue, sValue)
+    if ~strcmpi(sLastValue, sValue)
        iLastIndex = 1;      
-   else
+    else
        iLastIndex = get(lbEditorMainWindowPtr('get'), 'Value');
-   end              
+    end              
 
-   sBuffer = cellstr(get(lbEditorMainWindowPtr('get'), 'String'));
+    sBuffer = cellstr(get(lbEditorMainWindowPtr('get'), 'String'));
 
-   lIndex = contains(sBuffer, sValue, 'IgnoreCase', true);
+    lIndex = contains(sBuffer, sValue, 'IgnoreCase', true);
 
+    bFoundValue = false;
     for i=1+iLastIndex:numel(lIndex)
         if ~(lIndex(i) == 0)
             set(lbEditorMainWindowPtr('get'), 'Value', i);
+            bFoundValue = true;
             break;
         end    
     end                            
-
-    sLastValue = sValue;
+    
+    if bFoundValue == false
+        sLastValue = 'value_not_found';
+    else
+        sLastValue = sValue;
+    end
 end

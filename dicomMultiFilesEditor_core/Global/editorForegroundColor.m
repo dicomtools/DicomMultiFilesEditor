@@ -1,6 +1,6 @@
-function editorProgressBar(lProgress, sStatus)
-%function editorProgressBar(lProgress, sStatus)
-%Display Editor Progress Bar.
+function aColor = editorForegroundColor(sAction, aValue)
+%function aColor = editorForegroundColor(sAction, aValue)
+%Get\Set Editor Foreground Color.
 %See dicomMultiFilesEditor.doc (or pdf) for more information about options.
 %
 %Note: option settings must fit on one line and can contain one semicolon at most.
@@ -30,19 +30,10 @@ function editorProgressBar(lProgress, sStatus)
 % You should have received a copy of the GNU General Public License
 % along with dicomMultiFilesEditor.  If not, see <http://www.gnu.org/licenses/>.
 
-    set(uiEditorProgressWindowPtr('get'), 'title', sStatus);
+    persistent paColor; 
 
-    if lProgress == 1
-        set(uiEditorProgressBarPtr('get'), 'BackgroundColor', editorBackgroundColor('get'));
-    else 
-        set(uiEditorProgressBarPtr('get'), 'BackgroundColor', 'cyan');
-    end
-
-    x = get(uiEditorProgressBarPtr('get'), 'Position');
-
-    x(3) = lProgress;       % Corresponds to % progress if unit = normalized
-    set(uiEditorProgressBarPtr('get'), 'Position', x);
-
-    drawnow;
-
+    if strcmpi('set', sAction)
+       paColor = aValue;            
+    end      
+    aColor = paColor;
 end

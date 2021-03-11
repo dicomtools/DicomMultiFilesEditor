@@ -1,6 +1,6 @@
-function editorProgressBar(lProgress, sStatus)
-%function editorProgressBar(lProgress, sStatus)
-%Display Editor Progress Bar.
+function editorMainWindowMenu()
+%function editorMainWindowMenu()
+%Set Editor Figure Main Menu.
 %See dicomMultiFilesEditor.doc (or pdf) for more information about options.
 %
 %Note: option settings must fit on one line and can contain one semicolon at most.
@@ -30,19 +30,16 @@ function editorProgressBar(lProgress, sStatus)
 % You should have received a copy of the GNU General Public License
 % along with dicomMultiFilesEditor.  If not, see <http://www.gnu.org/licenses/>.
 
-    set(uiEditorProgressWindowPtr('get'), 'title', sStatus);
+    mFile = uimenu(dlgEditorWindowsPtr('get'),'Label','File');
+    uimenu(mFile,'Label', 'Open...', 'Callback', @editorSetSourceCallback);
+    uimenu(mFile,'Label', 'Save Header...', 'Callback', @editorSaveDicomHeaderCallback, 'Separator','on');
+    
+    mEdit = uimenu(dlgEditorWindowsPtr('get'),'Label','Edit');    
+    uimenu(mEdit,'Label', 'Editor Properties...', 'Callback', @setEditorOptionsCallback);    
+    uimenu(mEdit,'Label', 'Write Tag', 'Callback', @editorWriteHeaderCallback, 'Separator','on');    
+    uimenu(mEdit,'Label', 'Generate UID', 'Callback', @editorGenerateUIDCallback);    
 
-    if lProgress == 1
-        set(uiEditorProgressBarPtr('get'), 'BackgroundColor', editorBackgroundColor('get'));
-    else 
-        set(uiEditorProgressBarPtr('get'), 'BackgroundColor', 'cyan');
-    end
-
-    x = get(uiEditorProgressBarPtr('get'), 'Position');
-
-    x(3) = lProgress;       % Corresponds to % progress if unit = normalized
-    set(uiEditorProgressBarPtr('get'), 'Position', x);
-
-    drawnow;
-
+    mHelp = uimenu(dlgEditorWindowsPtr('get'),'Label','Help');
+    uimenu(mHelp,'Label', 'User Manual', 'Callback', @helpEditorCallback);
+    uimenu(mHelp,'Label', 'About', 'Callback', @aboutEditorCallback, 'Separator','on');
 end
