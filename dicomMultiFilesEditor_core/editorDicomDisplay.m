@@ -49,17 +49,18 @@ function sBuffer = editorDicomDisplay(sFileName)
             if (editorDefaultDict('get') == true)
 
                 sBuffer   = evalc('dicomdisp(sFileName, ''UseVRHeuristic'', false)');
-                tMetaData = dicominfo(sFileName, 'UseVRHeuristic', false);
-
+                tMetaData = dicominfo(sFileName, 'UseVRHeuristic', false);                
+            
                 sBuffer = editorFixInfo(sBuffer, tMetaData);
-
+                
             else
 
-                 sBuffer   = evalc('dicomdisp(sFileName, ''UseVRHeuristic'', true)'); 
-                 tMetaData = dicominfo(sFileName, 'UseDictionaryVR', true); 
+                sBuffer   = evalc('dicomdisp(sFileName, ''UseVRHeuristic'', true)'); 
+                tMetaData = dicominfo(sFileName, 'UseDictionaryVR', true);                                                  
 
-                 sBuffer = editorFixInfo(sBuffer, tMetaData);
-           end   
+                sBuffer = editorFixInfo(sBuffer, tMetaData);
+                
+            end              
 
         else
             editorDisplayMessage('Error: editorDicomDisplay(), the specified file is not in DICOM format!');

@@ -32,11 +32,7 @@ function editorSetSourceCallback(~, ~)
 
     if editorMultiFiles('get') == true
 
-         sCurrentDir = pwd;
-         if editorIntegrateToBrowser('get') == true
-             sCurrentDir = [sCurrentDir '/dicomMultiFilesEditor'];
-         end
-
+         sCurrentDir = editorRootPath('get');
          sMatFile = [sCurrentDir '/' 'lastOpenDir.mat'];
          % load last data directory
          if exist(sMatFile, 'file') % lastDirMat mat file exists, load it
@@ -44,9 +40,6 @@ function editorSetSourceCallback(~, ~)
             load('-mat', sMatFile);
             if exist('lastOpenDir', 'var')
                 sCurrentDir = lastOpenDir;
-            end
-            if sCurrentDir == 0
-               sCurrentDir = pwd;
             end
         end
 
@@ -76,11 +69,7 @@ function editorSetSourceCallback(~, ~)
             end
         end
     else
-        sCurrentDir = pwd;
-        if editorIntegrateToBrowser('get') == true
-             sCurrentDir = [sCurrentDir '/dicomMultiFilesEditor'];
-        end
-
+        sCurrentDir = editorRootPath('get');
         sMatFile = [sCurrentDir '/' 'lastOpenDir.mat'];
         % load last data directory
         if exist(sMatFile, 'file')
@@ -88,10 +77,6 @@ function editorSetSourceCallback(~, ~)
            load('-mat', sMatFile);
            if exist('lastOpenDir', 'var')
                sCurrentDir = lastOpenDir;
-           end
-
-           if sCurrentDir == 0
-              sCurrentDir = pwd;
            end
         end
 

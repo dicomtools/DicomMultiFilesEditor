@@ -30,12 +30,9 @@ function aboutEditorCallback(~, ~)
 % You should have received a copy of the GNU General Public License
 % along with dicomMultiFilesEditor.  If not, see <http://www.gnu.org/licenses/>.
 
-    if editorIntegrateToBrowser('get') == true
-        sAboutFile = ['./dicomMultiFilesEditor/about.txt'];
-    else
-        sAboutFile = ['./about.txt'];
-    end
-
+    sRootPath  = editorRootPath('get');
+    sAboutFile = sprintf('%s/about.txt', sRootPath);
+    
     sDisplayBuffer = '';
     fFileID = fopen(sAboutFile,'r');
     if~(fFileID == -1)

@@ -31,7 +31,7 @@ function sNewBuffer = editorFixInfo(sBuffer, tMetaData)
 % along with dicomMultiFilesEditor.  If not, see <http://www.gnu.org/licenses/>.
 
     asSplitToLine = splitlines(sBuffer);
-
+    
     for ii=1:numel(asSplitToLine)
         [aSplitLine, ~] = strsplit(asSplitToLine{ii});
         if numel(aSplitLine) == 10

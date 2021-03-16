@@ -31,7 +31,9 @@ function editorSetSource(bDisplaySource)
 % along with dicomMultiFilesEditor.  If not, see <http://www.gnu.org/licenses/>.
 
     dFoundValidDicomFile = false;
-
+    
+    editorDicomMetaData('set', '');
+  
     if editorMultiFiles('get') == true
 
         if editorSortFiles('get') == true 
@@ -93,7 +95,7 @@ function editorSetSource(bDisplaySource)
 
              for dDirOffset = 1 : numel(sFileList)   
 
-                editorProgressBar(dDirOffset / numel(sFileList) /2, 'Processing file list');
+                editorProgressBar(dDirOffset / numel(sFileList), 'Processing file list');
 
                  if ~(sFileList(dDirOffset).isDirectory)
 
@@ -151,12 +153,9 @@ function editorSetSource(bDisplaySource)
 
          set(lbEditorFilesWindowPtr('get'),'string', sFilesDisplay);                           
 
-         if strcmpi(get(btnEditorSaveHeaderPtr('get') ,'enable'), 'off')
-             set(btnEditorSaveHeaderPtr('get'),'enable', 'on');
-         end 
-
-         if strcmpi(get(btnEditorWriteHeaderPtr('get'),'enable'), 'off')
-             set(btnEditorWriteHeaderPtr('get'),'enable', 'on');
-         end  
+         set(btnEditorSaveHeaderPtr ('get'),'enable', 'on');
+         set(btnEditorWriteHeaderPtr('get'),'enable', 'on');
+         set(btnEditorExportDicomPtr('get'),'enable', 'on');
+         
      end 
  end

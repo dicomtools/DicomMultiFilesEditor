@@ -33,7 +33,8 @@ function initEditorDcm4che3()
     checkjava = which('org.dcm4che2.io.DicomInputStream');
     if isempty(checkjava)
 
-        libpath = './lib/'; 
+        sRootPath  = editorRootPath('get');
+        libpath = sprintf('%s/lib/',sRootPath); 
         javaaddpath([libpath 'dcm4che-core-3.2.1.jar']);
         javaaddpath([libpath 'dcm4che-image-3.2.1.jar']);
         javaaddpath([libpath 'dcm4che-imageio-3.2.1.jar']);

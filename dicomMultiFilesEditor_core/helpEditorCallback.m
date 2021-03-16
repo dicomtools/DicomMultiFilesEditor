@@ -30,11 +30,8 @@ function helpEditorCallback(~, ~)
 % You should have received a copy of the GNU General Public License
 % along with dicomMultiFilesEditor.  If not, see <http://www.gnu.org/licenses/>.
 
-    if editorIntegrateToBrowser('get') == true
-        sHelpFile = ['./dicomMultiFilesEditor/dicomMultiFilesEditorHelp.pdf'];
-    else
-        sHelpFile = ['./dicomMultiFilesEditorHelp.pdf'];
-    end
-
+    sRootPath  = editorRootPath('get');
+    sHelpFile = sprintf('%s/dicomMultiFilesEditorHelp.pdf', sRootPath);
+    
     winopen(sHelpFile);        
 end 

@@ -46,5 +46,8 @@ function initEditorGlobal()
     btnEditorSaveHeaderPtr ('set', '');
     edtEditorFindValuePtr  ('set', '');
     btnEditorSearchTagPtr  ('set', '');
-     
+    btnEditorResetHeaderPtr('set', '');   
+    btnEditorExportDicomPtr('set', '');       
+    
+    editorDicomMetaData('set', '');
 end

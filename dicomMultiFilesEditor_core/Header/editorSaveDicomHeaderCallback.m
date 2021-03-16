@@ -34,11 +34,7 @@ function editorSaveDicomHeaderCallback(~, ~)
 
     if editorMultiFiles('get') == true
 
-         sCurrentDir = pwd;
-         if editorIntegrateToBrowser('get') == true
-             sCurrentDir = [sCurrentDir '/dicomMultiFilesEditor'];
-         end
-
+         sCurrentDir = editorRootPath('get');
          sMatFile = [sCurrentDir '/' 'lastSaveDir.mat'];
          % load last data directory
          if exist(sMatFile, 'file') % lastDirMat mat file exists, load it
@@ -46,9 +42,6 @@ function editorSaveDicomHeaderCallback(~, ~)
             load('-mat', sMatFile);
             if exist('lastSaveDir', 'var')
                 sCurrentDir = lastSaveDir;
-            end
-            if sCurrentDir == 0
-                sCurrentDir = pwd;
             end
         end
 
@@ -158,11 +151,7 @@ function editorSaveDicomHeaderCallback(~, ~)
     else
         sMainDisplay = char(get(lbEditorMainWindowPtr('get'), 'string'));
         if(numel(sMainDisplay))
-             sCurrentDir = pwd;
-             if editorIntegrateToBrowser('get') == true
-                 sCurrentDir = [sCurrentDir '/dicomMultiFilesEditor'];
-             end
-
+             sCurrentDir = editorRootPath('get');
              sMatFile = [sCurrentDir '/' 'lastSaveDir.mat'];
              % load last data directory
              if exist(sMatFile, 'file')
@@ -170,10 +159,6 @@ function editorSaveDicomHeaderCallback(~, ~)
                 load('-mat', sMatFile);
                 if exist('lastSaveDir', 'var')
                     sCurrentDir = lastSaveDir;
-                end
-
-                if sCurrentDir == 0
-                   sCurrentDir = pwd;
                 end
              end
 
