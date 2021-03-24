@@ -329,7 +329,19 @@ function editorWriteHeaderCallback(~, ~)
                     sFieldName = erase(sFieldName, 'tMetaData.');
                     
                     try
-                        tMetaData.(sFieldName) = castValue(tDicomTag.sVR ,tDicomTag.sValue);
+                        if numel(sFieldName) > 64
+                            editorWriteMetaData('set', '');
+                            newValue = castValue(tDicomTag.sVR ,tDicomTag.sValue);
+                            sStruct = sprintf('tMetaData.%s', sFieldName);
+                            
+                            editorWriteUnfold(sStruct, newValue, tMetaData);
+                            tWriteMetaData = editorWriteMetaData('get');
+                            sNewField = erase(sStruct, ['.' dicomlookup(tDicomTag.sGroup, tDicomTag.sElement)]);
+                            eval([sNewField ' = tWriteMetaData']);
+                            
+                        else
+                            tMetaData.(sFieldName) = castValue(tDicomTag.sVR ,tDicomTag.sValue);
+                        end
                     catch
                         editorProgressBar(1, sprintf('Error:editorWriteTagCallbak, cant write the field %s', dicomlookup(tDicomTag.sGroup, tDicomTag.sElement)) );  
                         dError = true;                      
