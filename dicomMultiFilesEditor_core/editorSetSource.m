@@ -36,6 +36,11 @@ function editorSetSource(bDisplaySource)
   
     if editorMultiFiles('get') == true
 
+        try
+            
+        set(dlgEditorWindowsPtr('get'), 'Pointer', 'watch');
+        drawnow;        
+        
         if editorSortFiles('get') == true 
              datasets = editorDicomInfoSortFolder(editorMainDir('get'));
              if numel(datasets)
@@ -52,9 +57,12 @@ function editorSetSource(bDisplaySource)
 
          if editorSortFiles('get') == true                  
 
-             for dDirOffset = 1 : numel(sFileList)    
+             dDirLastOffset =  numel(sFileList);
+             for dDirOffset =1:dDirLastOffset   
 
-                 editorProgressBar(dDirOffset / numel(sFileList) /2, 'Processing file list');
+                 if mod(dDirOffset,5)==1 || dDirOffset == dDirLastOffset         
+                     editorProgressBar(dDirOffset / dDirLastOffset, sprintf('Processing file list %d/%d',dDirOffset, dDirLastOffset) );
+                 end
 
                   if (dFoundValidDicomFile == false)  
 
@@ -93,9 +101,12 @@ function editorSetSource(bDisplaySource)
 
          else    
 
-             for dDirOffset = 1 : numel(sFileList)   
+            dDirLastOffset =  numel(sFileList);
+            for dDirOffset = 1 : dDirLastOffset
 
-                editorProgressBar(dDirOffset / numel(sFileList), 'Processing file list');
+                 if mod(dDirOffset,5)==1 || dDirOffset == dDirLastOffset         
+                     editorProgressBar(dDirOffset/dDirLastOffset, sprintf('Processing file list %d/%d', dDirOffset, dDirLastOffset));
+                 end
 
                  if ~(sFileList(dDirOffset).isDirectory)
 
@@ -122,7 +133,14 @@ function editorSetSource(bDisplaySource)
          end   
 
         editorProgressBar(1, 'Ready');
-
+        
+        catch
+            editorProgressBar(1, 'Error:editorSetSource()');        
+        end
+        
+        set(dlgEditorWindowsPtr('get'), 'Pointer', 'default');
+        drawnow;
+        
      else                
          sDCMimg = [editorMainDir('get') editorDicomFileName('get')];            
          sFilesDisplay = editorDicomFileName('get');

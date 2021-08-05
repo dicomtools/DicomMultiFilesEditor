@@ -46,14 +46,16 @@ function tDataSets = editorSortDicomFileList(tFileList, iNbFiles)
 
         h = h(ind);
 
-        tDataSets(iLoop).FileNames    = cell(length(h),1);
-        tDataSets(iLoop).DicomInfos   = cell(length(h),1);
+        tDataSets(iLoop).FileNames  = cell(length(h),1);
+        tDataSets(iLoop).DicomInfos = cell(length(h),1);
 
-
-        for jLoop=1:length(h)
-
-            editorProgressBar(jLoop / length(h), 'Sorting file list');
-
+        endJloop = length(h);
+        for jLoop=1:endJloop
+            
+            if mod(jLoop,5)==1 || jLoop == endJloop         
+                editorProgressBar(jLoop / endJloop, sprintf('Sorting file list %d/%d', jLoop, endJloop) );
+            end
+            
             tDataSets(iLoop).FileNames{jLoop}    = tFileList.FileName{h(jLoop)} ;
             tDataSets(iLoop).DicomInfos{jLoop}   = tFileList.DicomInfo{h(jLoop)} ;
         end

@@ -35,9 +35,12 @@ function [tFileList, iNbFiles] = editorGetDicomFileList(sDirName, tFileList)
     f = java.io.File(char(sDirName));
     asFileList = f.listFiles();
 
-    for iLoop=1:length(asFileList)
-
-        editorProgressBar(iLoop / length(asFileList), 'Acquiring file list');
+    endIloop = length(asFileList);
+    for iLoop=1:endIloop
+        
+        if mod(iLoop,5)==1 || iLoop == endIloop         
+            editorProgressBar(iLoop / endIloop, sprintf('Acquiring file list %d/%d', iLoop, endIloop) );
+        end
 
         if ~asFileList(iLoop).isDirectory               
             tInfo = editorDicomInfo4che3(asFileList(iLoop));

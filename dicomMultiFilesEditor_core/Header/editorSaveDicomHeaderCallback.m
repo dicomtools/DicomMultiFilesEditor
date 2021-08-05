@@ -67,8 +67,19 @@ function editorSaveDicomHeaderCallback(~, ~)
 %                    javaFrame = get(h, 'JavaFrame');
 %                    javaFrame.setFigureIcon(javax.swing.ImageIcon(sLogo));
             end
+            
+            sDate = sprintf('%s', datetime('now','Format','MMMM-d-y-hhmmss'));                
+            sTargetDir = sprintf('%sDMFE_HEADER_%s/', sTargetDir, sDate);
+            if exist(char(sTargetDir), 'dir')
+                rmdir(char(sTargetDir), 's');
+            end
+            mkdir(char(sTargetDir));            
+            
         end
-
+        
+        try
+        set(dlgEditorWindowsPtr('get'), 'Pointer', 'watch');
+        drawnow; 
 
         f = java.io.File(char(editorMainDir('get')));
         sFileList = f.listFiles();
@@ -76,34 +87,35 @@ function editorSaveDicomHeaderCallback(~, ~)
  %       sFileList = dir(editorMainDir('get'));
 
         dUseOffsetArray = false;
-        if(editorMultiFiles('get') == true)
-            if (editorSaveAllHeader('get') == false)
-                i=1;
-                remain = editorSaveHeaderNumber('get');
-                if ~size(remain)
-                    editorDisplayMessage('Error: editorSaveDicomHeaderCallback(), no slice(s) to save, verify the options!');
-                    editorProgressBar(1, 'Error: editorSaveDicomHeaderCallback(), no slice(s) to save, verify the options!');
-                    return;
-                else
-                    dUseOffsetArray = true;
-                end
-                while (remain ~= "")
-                   [token,remain] = strtok(remain, ',');
-                   adHeaderNumber{i} = str2num(token);
-                   i = i+1;
-                end
-
+        if (editorSaveAllHeader('get') == false)
+            i=1;
+            remain = editorSaveHeaderNumber('get');
+            if ~size(remain)
+                editorDisplayMessage('Error: editorSaveDicomHeaderCallback(), no slice(s) to save, verify the options!');
+                editorProgressBar(1, 'Error: editorSaveDicomHeaderCallback(), no slice(s) to save, verify the options!');
+                return;
+            else
+                dUseOffsetArray = true;
             end
+            while (remain ~= "")
+               [token,remain] = strtok(remain, ',');
+               adHeaderNumber{i} = str2num(token);
+               i = i+1;
+            end
+
         end
 
         dNumberOfFile = 0;
 
         i=1;
         lFirstOffset = -1;
-        for dDirOffset = 1 : numel(sFileList)
+        dDirLastOffset =  numel(sFileList);
+        for dDirOffset = 1:dDirLastOffset
 
-            editorProgressBar(dDirOffset / numel(sFileList), 'Save in progress');
-
+            if mod(dDirOffset,5)==1 || dDirOffset == dDirLastOffset         
+                editorProgressBar(dDirOffset / dDirLastOffset, sprintf('Save in progress %d/%d', dDirOffset, dDirLastOffset) );
+            end
+            
             if ~sFileList(dDirOffset).isDirectory
 
                 if dUseOffsetArray == true
@@ -142,11 +154,16 @@ function editorSaveDicomHeaderCallback(~, ~)
 
         editorProgressBar(1, 'Ready');
 
-       sMessage = ...
-        sprintf('Saved %d file(s) to %s', dNumberOfFile, sTargetDir);
-
+        sMessage = sprintf('Saved %d file(s) to %s', dNumberOfFile, sTargetDir);
+        
         editorProgressBar(1, sMessage);
-
+        
+        catch
+            editorProgressBar(1, 'Error:editorSaveDicomHeaderCallback()');        
+        end
+        
+        set(dlgEditorWindowsPtr('get'), 'Pointer', 'default');
+        drawnow;          
       % editorDisplayMessage(sMessage);
     else
         sMainDisplay = char(get(lbEditorMainWindowPtr('get'), 'string'));

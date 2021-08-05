@@ -43,6 +43,6 @@ function editorProgressBar(lProgress, sStatus)
     x(3) = lProgress;       % Corresponds to % progress if unit = normalized
     set(uiEditorProgressBarPtr('get'), 'Position', x);
 
-    drawnow;
+    drawnow limitrate;
 
 end

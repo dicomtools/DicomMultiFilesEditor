@@ -56,6 +56,9 @@ function editorExportDicomCallback(~, ~)
             catch
                 editorProgressBar(1 , sprintf('Warning: Cant save file %s', sMatFile));
             end            
+            
+            sDate = sprintf('%s', datetime('now','Format','MMMM-d-y-hhmmss'));                
+            sOutDir = sprintf('%s/DMFE_DICOM_%s/', sOutDir, sDate);                                                
         end        
            
     else   
@@ -89,6 +92,9 @@ function editorExportDicomCallback(~, ~)
     end
     
     try
+        set(dlgEditorWindowsPtr('get'), 'Pointer', 'watch');
+        drawnow;  
+        
         warning('off','all')
             
         sTmpDir = sprintf('%stemp_dicom_%s//', tempdir, datetime('now','Format','MMMM-d-y-hhmmss'));
@@ -109,8 +115,10 @@ function editorExportDicomCallback(~, ~)
         end       
         
         for dDirOffset=1 : dDirLastOffset
-
-            editorProgressBar(dDirOffset / dDirLastOffset, 'Write in progress');
+            
+            if mod(dDirOffset,5)==1 || dDirOffset == dDirLastOffset         
+                editorProgressBar(dDirOffset / dDirLastOffset, sprintf('Write in progress %d/%d', dDirOffset, dDirLastOffset) );
+            end
             
             if editorMultiFiles('get') == false
                 dOffset = get(lbEditorFilesWindowPtr('get'), 'Value');
@@ -155,6 +163,8 @@ function editorExportDicomCallback(~, ~)
                             tMetaData.SeriesInstanceUID = lSeriesUID;
                         end
                     end
+                    
+                    tMetaData.SourceApplicationEntityTitle = 'DMFE';
 
                     try
                         dicomwrite(sDicomRead    , ...
@@ -168,6 +178,9 @@ function editorExportDicomCallback(~, ~)
                         dNumberOfFile = dNumberOfFile +1;
                     catch
 
+                        set(dlgEditorWindowsPtr('get'), 'Pointer', 'default');
+                        drawnow;  
+                        
                         editorDisplayMessage('Error: editorExportDicomCallback(), write faild!');
                         editorProgressBar(1, 'Error: editorExportDicomCallback(), write faild!');
                         return;
@@ -188,6 +201,10 @@ function editorExportDicomCallback(~, ~)
         editorProgressBar(1, 'Ready');        
         
     catch
+        
+        set(dlgEditorWindowsPtr('get'), 'Pointer', 'default');
+        drawnow;  
+                        
         editorDisplayMessage('Error: editorExportDicomCallback(), write faild!');
         editorProgressBar(1, 'Error: editorExportDicomCallback(), write faild!');
         return;       
@@ -199,5 +216,8 @@ function editorExportDicomCallback(~, ~)
                 sOutDir ...
                 ); 
 
-    editorProgressBar(1, sMessage);                
+    editorProgressBar(1, sMessage);
+    
+    set(dlgEditorWindowsPtr('get'), 'Pointer', 'default');
+    drawnow;      
 end
