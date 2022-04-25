@@ -44,8 +44,11 @@ function info = editorDicomInfo4che3(fileInput)
     info.PatientID             = char(dataset.getString(org.dcm4che.data.Tag.PatientID, 0));
 
     info.InstanceNumber        = dataset.getInt(org.dcm4che.data.Tag.InstanceNumber, 0);
-    info.ImagePositionPatient  = dataset.getFloat(org.dcm4che.data.Tag.ImagePositionPatient, 0);
 
+    info.PatientPosition         = char(dataset.getStrings(org.dcm4che.data.Tag.PatientPosition));      
+    info.ImagePositionPatient    = dataset.getDoubles(org.dcm4che.data.Tag.ImagePositionPatient);
+    info.ImageOrientationPatient = dataset.getDoubles(org.dcm4che.data.Tag.ImageOrientationPatient);   
+       
     info.SeriesInstanceUID     = char(dataset.getString(org.dcm4che.data.Tag.SeriesInstanceUID, 0));
     info.StudyInstanceUID      = char(dataset.getString(org.dcm4che.data.Tag.StudyInstanceUID, 0));
 

@@ -59,7 +59,7 @@ function [tFileList, iNbFiles] = editorGetDicomFileList(sDirName, tFileList)
 
                 if (isfield(tInfo, 'ImagePositionPatient'))
                     if ~isempty(tInfo.ImagePositionPatient)
-                        adImagePositionPatient = tInfo.ImagePositionPatient;  
+                        adImagePositionPatient = tInfo.ImagePositionPatient(3);  
                     end
                 end
 

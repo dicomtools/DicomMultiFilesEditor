@@ -33,5 +33,5 @@ function helpEditorCallback(~, ~)
     sRootPath  = editorRootPath('get');
     sHelpFile = sprintf('%s/dicomMultiFilesEditorHelp.pdf', sRootPath);
     
-    winopen(sHelpFile);        
+%    winopen(sHelpFile);        
 end 

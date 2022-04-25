@@ -31,27 +31,38 @@ function initEditorRootPath()
 % along with dicomMultiFilesEditor.  If not, see <http://www.gnu.org/licenses/>.
 
     editorRootPath('set', '');
-             
-    sRootDir = pwd;
-    if sRootDir(end) ~= '\' || ...
-       sRootDir(end) ~= '/'     
-        sRootDir = [sRootDir '/'];
-    end   
-        
-    if isfile(sprintf('%sDICOMmultiFileEditor.png', sRootDir))
+    
+    if isdeployed 
+        % User is running an executable in standalone mode. 
+        [~, result] = system('set PATH');
+        sRootDir = char(regexpi(result, 'Path=(.*?);', 'tokens', 'once'));
+        if sRootDir(end) ~= '\' || ...
+           sRootDir(end) ~= '/'     
+            sRootDir = [sRootDir '/'];
+        end         
         editorRootPath('set', sRootDir);
-    else
-        if integrateToBrowser('get') == true
-            if isfile(sprintf('%sdicomMultiFilesEditor_core/DICOMmultiFileEditor.png', sRootDir))
-                editorRootPath('set', sprintf('%sDICOMmultiFileEditor/', sRootDir) );
-            end
-        else    
-            sRootDir = fileparts(mfilename('fullpath'));
-            sRootDir = erase(sRootDir, 'dicomMultiFilesEditor_core');        
+    else             
+        sRootDir = pwd;
+        if sRootDir(end) ~= '\' || ...
+           sRootDir(end) ~= '/'     
+            sRootDir = [sRootDir '/'];
+        end   
 
-            if isfile(sprintf('%sDICOMmultiFileEditor.png', sRootDir))
-                editorRootPath('set', sRootDir);
+        if isfile(sprintf('%sDICOMmultiFileEditor.png', sRootDir))
+            editorRootPath('set', sRootDir);
+        else
+            if integrateToBrowser('get') == true
+                if isfile(sprintf('%sdicomMultiFilesEditor_core/DICOMmultiFileEditor.png', sRootDir))
+                    editorRootPath('set', sprintf('%sDICOMmultiFileEditor/', sRootDir) );
+                end
+            else    
+                sRootDir = fileparts(mfilename('fullpath'));
+                sRootDir = erase(sRootDir, 'dicomMultiFilesEditor_core');        
+
+                if isfile(sprintf('%sDICOMmultiFileEditor.png', sRootDir))
+                    editorRootPath('set', sRootDir);
+                end
             end
-        end
-    end    
+        end    
+    end
 end
