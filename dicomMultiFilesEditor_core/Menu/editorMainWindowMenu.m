@@ -34,6 +34,7 @@ function editorMainWindowMenu()
     uimenu(mFile,'Label', 'Open...', 'Callback', @editorSetSourceCallback);
     uimenu(mFile,'Label', 'Save Header...', 'Callback', @editorSaveDicomHeaderCallback, 'Separator','on');
     uimenu(mFile,'Label', 'Export Dicom...', 'Callback', @editorExportDicomCallback);
+    uimenu(mFile,'Label', 'Exit' ,'Callback', 'close', 'Separator','on');
     
     mEdit = uimenu(dlgEditorWindowsPtr('get'),'Label','Edit');    
     uimenu(mEdit,'Label', 'Editor Properties...', 'Callback', @setEditorOptionsCallback);    
