@@ -10,10 +10,10 @@
 
 ## Features:
 
-* View and modify DICOM tags of all slices
-* Set a custom DICOM dictionary
-* Add your own private field and save a new dicom set
-* Dump DICOM Header to text file
+- View and modify DICOM tags of all slices
+- Set a custom DICOM dictionary
+- Add your own private field and save a new dicom set
+- Dump DICOM Header to text file
 
 ## MATLAB version
 
