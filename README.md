@@ -1,6 +1,6 @@
 <div align="center">
   <h1>DICOM Multi-files Editor</h1>
-  <p><strong>The DICOM Multi-files Editor is a a DICOM header viewer and editor for research provided by <a href="[https://daniellafontaine.com/]>Daniel Lafontaine</a>.</p>
+  <p><strong>The DICOM Multi-files Editor is a a DICOM header viewer and editor for research provided by <a href="https://daniellafontaine.com/">Daniel Lafontaine</a>.</p>
 </div>
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/dicomtools/DicomMultiFilesEditor)
