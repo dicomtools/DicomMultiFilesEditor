@@ -1,4 +1,7 @@
-# A DICOM Header Viewer and Editor for Research
+<div align="center">
+  <h1>DICOM Multi-files Editor</h1>
+  <p><strong>The DICOM Multi-files Editor is a a DICOM header viewer and editor for research provided by <a href="https://daniellafontaine.com/">Daniel Lafontaine</a>.</p>
+</div>
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/dicomtools/DicomMultiFilesEditor)
 [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/dicomtools/DicomMultiFilesEditor/blob/main/LICENSE)
