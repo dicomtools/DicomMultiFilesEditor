@@ -35,11 +35,18 @@ function initEditorRootPath()
     if isdeployed 
         % User is running an executable in standalone mode. 
         [~, result] = system('set PATH');
-        sRootDir = char(regexpi(result, 'Path=(.*?);', 'tokens', 'once'));
+        
+        if isempty(result)
+            sRootDir = pwd;          
+        else
+            sRootDir = char(regexpi(result, 'Path=(.*?);', 'tokens', 'once'));
+        end
+        
         if sRootDir(end) ~= '\' || ...
            sRootDir(end) ~= '/'     
             sRootDir = [sRootDir '/'];
         end         
+        
         editorRootPath('set', sRootDir);
     else             
         sRootDir = pwd;
