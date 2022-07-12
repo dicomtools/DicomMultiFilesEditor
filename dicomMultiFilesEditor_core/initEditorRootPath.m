@@ -32,14 +32,29 @@ function initEditorRootPath()
 
     editorRootPath('set', '');
     
-    if isdeployed 
-        % User is running an executable in standalone mode. 
-        [~, result] = system('set PATH');
-        
-        if isempty(result)
-            sRootDir = pwd;          
-        else
+    if isdeployed % User is running an executable in standalone mode. 
+               
+        if ismac % Mac
+            
+            sNameOfDeployedApp = 'dicomMultiFilesEditor'; % do not include the '.app' extension
+            [~, result] = system(['top -n100 -l1 | grep ' sNameOfDeployedApp ' | awk ''{print $1}''']);
+            result=strtrim(result);
+            [status, result] = system(['ps xuwww -p ' result ' | tail -n1 | awk ''{print $NF}''']);
+            if status==0
+                diridx=strfind(result,[sNameOfDeployedApp '.app']);
+                sRootDir=result(1:diridx-2);
+            else
+                msgbox({'realpwd not set:',result})
+            end              
+            
+        elseif ispc % Windows       
+            
+            [~, result] = system('set PATH'); % Windows
             sRootDir = char(regexpi(result, 'Path=(.*?);', 'tokens', 'once'));
+            
+        else % Linux
+            
+            sRootDir = pwd;                            
         end
         
         if sRootDir(end) ~= '\' || ...
