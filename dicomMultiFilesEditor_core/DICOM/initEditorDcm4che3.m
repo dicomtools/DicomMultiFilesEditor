@@ -30,18 +30,29 @@ function initEditorDcm4che3()
 % You should have received a copy of the GNU General Public License
 % along with dicomMultiFilesEditor.  If not, see <http://www.gnu.org/licenses/>.
 
-    checkjava = which('org.dcm4che2.io.DicomInputStream');
+    checkjava = which('org.dcm4che3.io.DicomInputStream');
     if isempty(checkjava)
 
         sRootPath  = editorRootPath('get');
         libpath = sprintf('%s/lib/',sRootPath); 
-        javaaddpath([libpath 'dcm4che-core-3.2.1.jar']);
-        javaaddpath([libpath 'dcm4che-image-3.2.1.jar']);
-        javaaddpath([libpath 'dcm4che-imageio-3.2.1.jar']);
-         javaaddpath([libpath 'dcm4che-net-3.2.1.jar'])
+               
+%        javaaddpath([libpath 'dcm4che-core-3.2.1.jar']);
+%        javaaddpath([libpath 'dcm4che-image-3.2.1.jar']);
+%        javaaddpath([libpath 'dcm4che-imageio-3.2.1.jar']);
+%        javaaddpath([libpath 'dcm4che-net-3.2.1.jar'])
 
-        javaaddpath([libpath 'slf4j-api-1.6.1.jar']);
-        javaaddpath([libpath 'slf4j-log4j12-1.6.1.jar']);
-        javaaddpath([libpath 'log4j-1.2.16.jar']);
+%        javaaddpath([libpath 'slf4j-api-1.6.1.jar']);
+%        javaaddpath([libpath 'slf4j-log4j12-1.6.1.jar']);
+%        javaaddpath([libpath 'log4j-1.2.16.jar']);
+        
+        javaaddpath([libpath 'dcm4che-core-5.17.0.jar']);
+        javaaddpath([libpath 'dcm4che-image-5.17.0.jar']);
+        javaaddpath([libpath 'dcm4che-imageio-5.17.0.jar']);
+        javaaddpath([libpath 'dcm4che-imageio-rle-5.17.0.jar'])
+        javaaddpath([libpath 'dcm4che-net-5.17.0.jar'])
+
+        javaaddpath([libpath 'slf4j-api-1.7.25.jar']);
+        javaaddpath([libpath 'slf4j-log4j12-1.7.25.jar']);
+        javaaddpath([libpath 'log4j-1.2.17.jar']);          
     end
 end

@@ -31,7 +31,7 @@ function info = editorDicomInfo4che3(fileInput)
 % along with dicomMultiFilesEditor.  If not, see <http://www.gnu.org/licenses/>.
 
     try 
-        din = org.dcm4che.io.DicomInputStream(...
+        din = org.dcm4che3.io.DicomInputStream(...
                 java.io.BufferedInputStream(java.io.FileInputStream(char(fileInput))));    
     catch 
        info = ''; 
@@ -40,18 +40,18 @@ function info = editorDicomInfo4che3(fileInput)
 
     dataset = din.readDataset(-1, -1);        
 
-    info.PatientName           = char(dataset.getString(org.dcm4che.data.Tag.PatientName, 0));
-    info.PatientID             = char(dataset.getString(org.dcm4che.data.Tag.PatientID, 0));
+    info.PatientName           = char(dataset.getString(org.dcm4che3.data.Tag.PatientName, 0));
+    info.PatientID             = char(dataset.getString(org.dcm4che3.data.Tag.PatientID, 0));
 
-    info.InstanceNumber        = dataset.getInt(org.dcm4che.data.Tag.InstanceNumber, 0);
+    info.InstanceNumber        = dataset.getInt(org.dcm4che3.data.Tag.InstanceNumber, 0);
 
-    info.PatientPosition         = char(dataset.getStrings(org.dcm4che.data.Tag.PatientPosition));      
-    info.ImagePositionPatient    = dataset.getDoubles(org.dcm4che.data.Tag.ImagePositionPatient);
-    info.ImageOrientationPatient = dataset.getDoubles(org.dcm4che.data.Tag.ImageOrientationPatient);   
+    info.PatientPosition         = char(dataset.getStrings(org.dcm4che3.data.Tag.PatientPosition));      
+    info.ImagePositionPatient    = dataset.getDoubles(org.dcm4che3.data.Tag.ImagePositionPatient);
+    info.ImageOrientationPatient = dataset.getDoubles(org.dcm4che3.data.Tag.ImageOrientationPatient);   
        
-    info.SeriesInstanceUID     = char(dataset.getString(org.dcm4che.data.Tag.SeriesInstanceUID, 0));
-    info.StudyInstanceUID      = char(dataset.getString(org.dcm4che.data.Tag.StudyInstanceUID, 0));
+    info.SeriesInstanceUID     = char(dataset.getString(org.dcm4che3.data.Tag.SeriesInstanceUID, 0));
+    info.StudyInstanceUID      = char(dataset.getString(org.dcm4che3.data.Tag.StudyInstanceUID, 0));
 
-    info.AccessionNumber       = char(dataset.getString(org.dcm4che.data.Tag.AccessionNumber, 0));
+    info.AccessionNumber       = char(dataset.getString(org.dcm4che3.data.Tag.AccessionNumber, 0));
 
 end
