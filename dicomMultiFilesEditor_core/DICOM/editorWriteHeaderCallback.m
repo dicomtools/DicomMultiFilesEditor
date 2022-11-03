@@ -522,7 +522,7 @@ function editorWriteHeaderCallback(~, ~)
                             sFieldName = erase(sFieldName, 'tMetaData.');
 
                             try
-                                if numel(sFieldName) > 64
+%                                if numel(sFieldName) > 64
                                     editorWriteMetaData('set', '');
                                     newValue = castVrValue(tDicomTag.sVR ,tDicomTag.sValue);
                                     sStruct = sprintf('tMetaData.%s', sFieldName);
@@ -532,9 +532,9 @@ function editorWriteHeaderCallback(~, ~)
                                     sNewField = erase(sStruct, ['.' dicomlookup(tDicomTag.sGroup, tDicomTag.sElement)]);
                                     eval([sNewField ' = tWriteMetaData']);
 
-                                else
-                                    tMetaData.(sFieldName) = castVrValue(tDicomTag.sVR ,tDicomTag.sValue);
-                                end
+%                                else
+%                                    tMetaData.(sFieldName) = castVrValue(tDicomTag.sVR ,tDicomTag.sValue);
+%                                end
                             catch
                                 editorProgressBar(1, sprintf('Error:, cant write the field %s', dicomlookup(tDicomTag.sGroup, tDicomTag.sElement)) );  
                                 dError = true;                      
@@ -725,12 +725,21 @@ function editorWriteHeaderCallback(~, ~)
             sStructName = aList{1};
             return;
         else % Find Item           
-            for jj=1:numel(aList)
+            
+            asElement = stMainWindow{dElementOffset};                
+            aElementSplit = strsplit(asElement,' ');
+            
+            dItemNumber = str2double(aElementSplit{1});
+            sItemName = [];
+            
+            for jj=1:numel(aList)                                
                 aItemOffset{jj} = [];
                 aSplit = strsplit(aList{jj},'.');
-                aItemRoot = aSplit(end-2);
+                sItemRoot = aSplit(end-2);
+                sItemName = aSplit(end);
                 for kk=1:numel(stMainWindow)
-                    if strfind(stMainWindow{kk}, aItemRoot)
+                    if strfind(stMainWindow{kk}, sItemRoot)
+                                                                        
                         if isempty(strfind(stMainWindow{kk}, '[')) && ... % Item has no value
                            isempty(strfind(stMainWindow{kk}, ']')) 
                             if dElementOffset > kk
@@ -743,28 +752,24 @@ function editorWriteHeaderCallback(~, ~)
             end            
         end
         
-        dNbItemOffset = 0;
+        dNbItemOffset = 1;
         
         dOffsetMin = min([aItemOffset{:}]);
         for tt=dElementOffset-dOffsetMin:dElementOffset
-            if strfind(stMainWindow{tt}, 'Item')
-                if isempty(strfind(stMainWindow{kk}, '[')) && ... % Item has no value               
-                   isempty(strfind(stMainWindow{kk}, ']'))                  
-                    dNbItemOffset = dNbItemOffset+1;
-                end
+            if strfind(stMainWindow{tt}, sItemName)
+                
+                asElement = stMainWindow{tt};                
+                aElementSplit = strsplit(asElement,' ');
+
+                adItemNumber{dNbItemOffset} = str2double(aElementSplit{1});
+                dNbItemOffset = dNbItemOffset+1;
             end
         end
         
-        dOffsetCount = 0;
         for mm=1:numel(aList)
-            if aItemOffset{mm} == dOffsetMin
-                dOffsetCount = dOffsetCount+1;
-                if dOffsetCount == dNbItemOffset
-                    sStructName = aList{mm};
-                    break;
-                end
-                
-                
+            if adItemNumber{mm} == dItemNumber
+                sStructName = aList{mm};
+                break;       
             end
             
         end
