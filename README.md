@@ -21,6 +21,6 @@
 
 ## Installation
 
-* https://github.com/dicomtools/DicomMultiFilesEditor/wiki
+* https://github.com/dicomtools/DicomMultiFilesEditor/wiki/Source-code-version-of-dicomMultiFilesEditor
 
 Visit https://daniellafontaine.com/ for more information
