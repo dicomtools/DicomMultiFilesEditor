@@ -8,7 +8,7 @@
 
 ![DicomMultiFilesEditor](images/DicomMultiFilesEditorMain.jpg)
 
-## Features:
+## Features
 
 - View and modify DICOM tags of all slices
 - Set a custom DICOM dictionary
@@ -22,5 +22,7 @@
 ## Installation
 
 * https://github.com/dicomtools/DicomMultiFilesEditor/wiki/Source-code-version-of-dicomMultiFilesEditor
+
+## Reference
 
 Visit https://daniellafontaine.com/ for more information
