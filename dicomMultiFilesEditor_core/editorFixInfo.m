@@ -36,11 +36,12 @@ function sNewBuffer = editorFixInfo(sBuffer, tMetaData)
         [aSplitLine, ~] = strsplit(asSplitToLine{ii});
         if numel(aSplitLine) == 10
             try
-                asSplitToLine{ii} = strrep(asSplitToLine{ii}, '*Binary*', sprintf('[%s]', num2str( tMetaData.(aSplitLine{8}) ) ));   
+                asSplitToLine{ii} = replace(asSplitToLine{ii}, '*Binary*', sprintf('[%s]', num2str( tMetaData.(aSplitLine{8}) ) ));   
             catch
             end
         end                                
     end
 
     sNewBuffer = asSplitToLine;
+    
 end

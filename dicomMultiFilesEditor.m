@@ -55,13 +55,17 @@ function dicomMultiFilesEditor(varargin)
     
     dOutputDirOffset = 0;
         
-    varargin = replace(varargin, '"', '');
-    varargin = replace(varargin, ']', '');
-    varargin = replace(varargin, '[', '');
+%    varargin = replace(varargin, '"', '');
+%    varargin = replace(varargin, ']', '');
+%    varargin = replace(varargin, '[', '');
 
     for k=1:length(varargin)
         
-        sSwitchAndArgument = varargin{k};
+        sSwitchAndArgument = char(varargin{k});
+
+        sSwitchAndArgument = replace(sSwitchAndArgument, '"', '');
+        sSwitchAndArgument = replace(sSwitchAndArgument, ']', '');
+        sSwitchAndArgument = replace(sSwitchAndArgument, '[', '');
 
         cSwitch = sSwitchAndArgument(1:2);
         sArgument = sSwitchAndArgument(3:end);
@@ -78,7 +82,7 @@ function dicomMultiFilesEditor(varargin)
                 
                 if k+1 <= length(varargin)
                     if dOutputDirOffset == 0
-                        sOutputPath = varargin{k+1};
+                        sOutputPath = strtrim(char(varargin{k+1}));
                         if sOutputPath(end) ~= '/'
                             argTragetDir = [sOutputPath '/'];   
                             dOutputDirOffset = k+1;
@@ -87,13 +91,13 @@ function dicomMultiFilesEditor(varargin)
                 end                
                             
             case '-d'
-                argDicomDict = sArgument; 
+                argDicomDict = strtrim(sArgument); 
                 
             case '-h'
-                argHeaderNumber = sArgument;   
+                argHeaderNumber = strtrim(sArgument);   
                 
             case '-l'
-                argSortFiles = sArgument;   
+                argSortFiles = strtrim(sArgument);   
                 
             case '-i'
                 argInternal = true;              
@@ -103,9 +107,9 @@ function dicomMultiFilesEditor(varargin)
                
                     if ~(sSwitchAndArgument(end) == '\') || ...
                        ~(sSwitchAndArgument(end) == '/')    
-                        argMainDirOrFileName = [sSwitchAndArgument '/'];
+                        argMainDirOrFileName = [strtrim(sSwitchAndArgument) '/'];
                     else
-                        argMainDirOrFileName = sSwitchAndArgument;
+                        argMainDirOrFileName = strtrim(sSwitchAndArgument);
                     end    
                     dIsCommandLine = true;
                 end

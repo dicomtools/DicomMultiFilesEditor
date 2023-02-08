@@ -17,7 +17,7 @@
 
 ## MATLAB tested version
 
-* MATLAB 2020a
+* MATLAB 2022a
 
 ## Installation
 
