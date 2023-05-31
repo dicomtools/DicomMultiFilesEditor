@@ -713,8 +713,7 @@ function editorWriteHeaderCallback(~, ~)
     end
 
     function sStructName = extractStructElementName(aList, stMainWindow, dElementOffset)
-        
-        aItemOffset =[];
+
         sStructName =[];
         
         if isempty(aList)
@@ -725,55 +724,76 @@ function editorWriteHeaderCallback(~, ~)
             sStructName = aList{1};
             return;
         else % Find Item           
-            
-            asElement = stMainWindow{dElementOffset};                
-            aElementSplit = strsplit(asElement,' ');
-            
-            dItemNumber = str2double(aElementSplit{1});
-            sItemName = [];
-            
-            for jj=1:numel(aList)                                
-                aItemOffset{jj} = [];
-                aSplit = strsplit(aList{jj},'.');
-                sItemRoot = aSplit(end-2);
-                sItemName = aSplit(end);
-                for kk=1:numel(stMainWindow)
-                    if strfind(stMainWindow{kk}, sItemRoot)
-                                                                        
-                        if isempty(strfind(stMainWindow{kk}, '[')) && ... % Item has no value
-                           isempty(strfind(stMainWindow{kk}, ']')) 
-                            if dElementOffset > kk
-                                aItemOffset{jj} = dElementOffset-kk; % Lowest elememt will be the item
-                            end                        
-                       end
-                    end
-                    
-                end
-            end            
-        end
-        
-        dNbItemOffset = 1;
-        
-        dOffsetMin = min([aItemOffset{:}]);
-        for tt=dElementOffset-dOffsetMin:dElementOffset
-            if strfind(stMainWindow{tt}, sItemName)
-                
-                asElement = stMainWindow{tt};                
-                aElementSplit = strsplit(asElement,' ');
+            aItem = [];
 
-                adItemNumber{dNbItemOffset} = str2double(aElementSplit{1});
-                dNbItemOffset = dNbItemOffset+1;
-            end
-        end
-        
-        for mm=1:numel(aList)
-            if adItemNumber{mm} == dItemNumber
-                sStructName = aList{mm};
-                break;       
-            end
+            dRootItemOffset = 0;
+            dNbTag = 0;
+         
+            jj = dElementOffset;
             
+            while jj >= 1
+                
+                if strfind(stMainWindow{jj}, 'Item')
+                    aSplit = strsplit(stMainWindow{jj-1},' ');
+                    sItemRoot = aSplit(end-1);
+                    for ll=1:numel(aList)
+                        if strfind(aList{ll}, sItemRoot)
+                            dNbTag=dNbTag+1;
+                            aItem{dNbTag} = aList{ll}; % Lowest elememt will be the item
+                            if dRootItemOffset == 0
+                                dRootItemOffset = jj-1;
+                            end
+
+                        end
+                    end
+                    if dNbTag ~= 0
+                        break;
+                    end
+                end
+
+                jj = jj - 1;
+
+            end
+
+            if dNbTag == 1
+                sStructName = aItem{1};
+            elseif dNbTag > 1
+                aItem = [];
+                jj = dRootItemOffset;
+                while jj >= 1
+                    
+                    % Decrement jj
+                    if strfind(stMainWindow{jj}, 'Item')
+                        aSplit = strsplit(stMainWindow{jj-1},' ');
+                        sItemRoot = aSplit(end-1);
+                        for ll=1:numel(aList)
+                            if strfind(aList{ll}, sItemRoot)
+                                dNbTag=dNbTag+1;
+                                aItem{dNbTag} = aList{ll}; % Lowest elememt will be the item
+                                if dRootItemOffset == 0
+                                    dRootItemOffset = jj-1;
+
+                                end
+    
+                            end
+                        end
+                        if dNbTag ~= 0
+                            break;
+                        end
+                    end
+    
+                    jj = jj - 1;
+    
+                end
+
+                if dNbTag == 1
+                    sStructName = aItem{1};
+                end
+            else
+                sStructName = [];
+            end
         end
-        
+
     end
        
     function value = castVrValue(sVR, sValue)    
