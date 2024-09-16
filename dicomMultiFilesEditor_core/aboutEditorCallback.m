@@ -31,6 +31,8 @@ function aboutEditorCallback(~, ~)
 % along with dicomMultiFilesEditor.  If not, see <http://www.gnu.org/licenses/>.
 
     sRootPath  = editorRootPath('get');
+
+    % msgbox(sRootPath)
     sAboutFile = sprintf('%s/about.txt', sRootPath);
     
     sDisplayBuffer = '';
