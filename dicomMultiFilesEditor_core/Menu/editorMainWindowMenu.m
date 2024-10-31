@@ -42,6 +42,7 @@ function editorMainWindowMenu()
     uimenu(mEdit,'Label', 'Generate UID', 'Callback', @editorGenerateUIDCallback);    
 
     mHelp = uimenu(dlgEditorWindowsPtr('get'),'Label','Help');
-    uimenu(mHelp,'Label', 'User Manual', 'Callback', @helpEditorCallback);
-    uimenu(mHelp,'Label', 'About', 'Callback', @aboutEditorCallback, 'Separator','on');
+    uimenu(mHelp,'Label', 'User Manual' , 'Callback', @helpEditorCallback);
+    uimenu(mHelp,'Label', 'Terms Of Use', 'Callback', @termsOfUseEditorCallback);
+    uimenu(mHelp,'Label', 'About'       , 'Callback', @aboutEditorCallback);
 end

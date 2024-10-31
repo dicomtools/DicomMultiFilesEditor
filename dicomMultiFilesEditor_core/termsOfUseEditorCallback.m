@@ -1,6 +1,6 @@
-function helpEditorCallback(~, ~)
-%function helpEditorCallback(~, ~)
-%Display Editor Help.
+function termsOfUseEditorCallback(~, ~)
+%function termsOfUseEditorCallback(~, ~)
+%Display Editor Terms Of Use.
 %See dicomMultiFilesEditor.doc (or pdf) for more information about options.
 %
 %Note: option settings must fit on one line and can contain one semicolon at most.
@@ -10,7 +10,7 @@ function helpEditorCallback(~, ~)
 %
 %Last specifications modified:
 %
-% Copyright 2020, Daniel Lafontaine, on behalf of the dicomMultiFilesEditor development team.
+% Copyright 2024, Daniel Lafontaine, on behalf of the dicomMultiFilesEditor development team.
 % 
 % This file is part of The DICOM Multi-Files Editor (dicomMultiFilesEditor).
 % 
@@ -30,14 +30,13 @@ function helpEditorCallback(~, ~)
 % You should have received a copy of the GNU General Public License
 % along with dicomMultiFilesEditor.  If not, see <http://www.gnu.org/licenses/>.
 
-    % sHelpFile = sprintf('%s/dicomMultiFilesEditorHelp.pdf', editorRootPath('get'));
-    % 
-    % if ispc
-    %     system(['start "" "' sHelpFile '"']);
-    % elseif ismac
-    %     system(['open "' sHelpFile '"']);
-    % elseif isunix
-    %     system(['xdg-open "' sHelpFile '"']);
-    % end
+    sTermsFile = sprintf('%s/dicomMultiFilesEditorTermsOfUse.pdf', editorRootPath('get'));
 
-end 
+    if ispc
+        system(['start "" "' sTermsFile '"']);
+    elseif ismac
+        system(['open "' sTermsFile '"']);
+    elseif isunix
+        system(['xdg-open "' sTermsFile '"']);
+    end
+end
