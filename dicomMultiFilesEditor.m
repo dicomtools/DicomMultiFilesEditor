@@ -199,7 +199,19 @@ function dicomMultiFilesEditor(varargin)
 
     xSize = dScreenSize(3) * dDlgPosition(3); 
     ySize = dDialogSize - 30;        
-                    
+
+    sRootPath = editorRootPath('get');
+    
+    if ~isempty(sRootPath)
+
+        javaFrame = get(dlgEditorWindowsPtr('get'), 'JavaFrame');
+
+        if ~isempty(javaFrame)
+            
+            javaFrame.setFigureIcon(javax.swing.ImageIcon(sprintf('%s/logo.png', sRootPath)));       
+        end
+    end
+
     uiMainWindow = ...
         uipanel(dlgWindows,...
                 'Units'   , 'pixels',...
