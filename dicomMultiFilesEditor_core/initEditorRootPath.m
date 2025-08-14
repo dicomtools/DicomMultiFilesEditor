@@ -62,18 +62,18 @@ function initEditorRootPath()
             sRootDir = [sRootDir '/'];
         end         
         
-        if isfile(sprintf('%sDICOMmultiFileEditor.png', sRootDir))
+        if isfile(sprintf('%sEditor_logo.png', sRootDir))
             editorRootPath('set', sRootDir);
         else
             if integrateToBrowser('get') == true
-                if isfile(sprintf('%sdicomMultiFilesEditor_core/DICOMmultiFileEditor.png', sRootDir))
+                if isfile(sprintf('%sdicomMultiFilesEditor_core/Editor_logo.png', sRootDir))
                     editorRootPath('set', sprintf('%sDICOMmultiFileEditor/', sRootDir) );
                 end
             else    
                 sRootDir = fileparts(mfilename('fullpath'));
                 sRootDir = erase(sRootDir, 'dicomMultiFilesEditor_core');        
 
-                if isfile(sprintf('%sDICOMmultiFileEditor.png', sRootDir))
+                if isfile(sprintf('%sEditor_logo.png', sRootDir))
                     editorRootPath('set', sRootDir);
                 end
             end
@@ -85,18 +85,18 @@ function initEditorRootPath()
             sRootDir = [sRootDir '/'];
         end   
 
-        if isfile(sprintf('%sDICOMmultiFileEditor.png', sRootDir))
+        if isfile(sprintf('%sEditor_logo.png', sRootDir))
             editorRootPath('set', sRootDir);
         else
             if integrateToBrowser('get') == true
-                if isfile(sprintf('%s/DICOMmultiFileEditor.png', sRootDir))
+                if isfile(sprintf('%s/Editor_logo.png', sRootDir))
                     editorRootPath('set', sprintf('%sDICOMmultiFileEditor/', sRootDir) );
                 end
             else    
                 sRootDir = fileparts(mfilename('fullpath'));
                 sRootDir = erase(sRootDir, 'dicomMultiFilesEditor_core');        
 
-                if isfile(sprintf('%sDICOMmultiFileEditor.png', sRootDir))
+                if isfile(sprintf('%sEditor_logo.png', sRootDir))
                     editorRootPath('set', sRootDir);
                 end
             end
