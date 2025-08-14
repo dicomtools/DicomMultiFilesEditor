@@ -89,7 +89,7 @@ function initEditorRootPath()
             editorRootPath('set', sRootDir);
         else
             if integrateToBrowser('get') == true
-                if isfile(sprintf('%sdicomMultiFilesEditor_core/DICOMmultiFileEditor.png', sRootDir))
+                if isfile(sprintf('%s/DICOMmultiFileEditor.png', sRootDir))
                     editorRootPath('set', sprintf('%sDICOMmultiFileEditor/', sRootDir) );
                 end
             else    
